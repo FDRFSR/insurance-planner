@@ -1,47 +1,156 @@
-# Svelte + TS + Vite
+# 📅 Weekly Planner CLI-Style
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+Un planner settimanale minimalista con stile CLI, perfetto per organizzare le tue attività con un sistema di tag avanzato.
 
-## Recommended IDE Setup
+![Demo](https://img.shields.io/badge/demo-live-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## ✨ Caratteristiche
 
-## Need an official Svelte framework?
+- **🎯 Sistema di tag doppio**: Categorizza le attività per tipo e urgenza
+- **📱 Responsive Design**: Funziona perfettamente su desktop e mobile  
+- **⚡ CLI-Style**: Design minimalista ispirato ai terminali
+- **🔄 Aggiornamento automatico**: La settimana si aggiorna automaticamente
+- **💾 Persistenza dati**: I dati vengono salvati automaticamente (localStorage)
+- **🌟 UX fluida**: Transizioni smooth e feedback visivi
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+## 🏷️ Sistema di Tag
 
-## Technical considerations
+### Categoria (Tipo di attività)
+- **📋 Task** - Attività generiche
+- **📞 Call** - Chiamate da effettuare  
+- **💰 Quote** - Preventivi e offerte
+- **⚠️ Claims** - Reclami e pratiche urgenti
 
-**Why use this over SvelteKit?**
+### Urgenza (Priorità)
+- **🟢 Bassa** - Non urgente
+- **🟡 Media** - Priorità normale
+- **🔴 Alta** - Urgente e importante
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## 🚀 Come usare
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+1. **Seleziona la categoria** dal primo menu a tendina
+2. **Scegli il livello di urgenza** dal secondo menu
+3. **Scrivi l'attività** nel campo di testo
+4. **Premi Invio** per aggiungere
+5. **Click sulla checkbox** per marcare come completata
+6. **Click sulla ✕** per eliminare
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## 📦 Installazione
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+### Opzione 1: Download diretto
+```bash
+git clone https://github.com/tuousername/weekly-planner-cli.git
+cd weekly-planner-cli
+# Apri index.html nel browser
 ```
+
+### Opzione 2: Hosting locale
+```bash
+# Con Python
+python -m http.server 8000
+
+# Con Node.js
+npx serve .
+
+# Visita http://localhost:8000
+```
+
+## 🛠️ Tecnologie utilizzate
+
+- **HTML5** - Struttura semantica
+- **CSS3** - Styling moderno con transizioni
+- **Vanilla JavaScript** - Logica dell'applicazione
+- **LocalStorage API** - Persistenza dei dati
+- **Responsive Design** - Compatibilità mobile
+
+## 📱 Compatibilità
+
+- ✅ Chrome/Chromium 70+
+- ✅ Firefox 65+
+- ✅ Safari 12+
+- ✅ Edge 79+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+## 🎨 Personalizzazione
+
+### Aggiungere nuove categorie
+Modifica l'array delle categorie nel JavaScript:
+
+```javascript
+// Nel codice, cerca la sezione delle categorie
+const categories = {
+    'meeting': '🤝 Meeting',
+    'email': '📧 Email',
+    // Aggiungi le tue categorie
+};
+```
+
+### Modificare i colori
+I colori dei tag sono definiti nel CSS:
+
+```css
+.category-nuova {
+    background-color: #tuo-colore;
+    color: #tuo-testo;
+    border: 1px solid #tuo-bordo;
+}
+```
+
+## 🤝 Contribuire
+
+I contributi sono benvenuti! Per contribuire:
+
+1. Fork del progetto
+2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit delle modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. Push del branch (`git push origin feature/AmazingFeature`)
+5. Apri una Pull Request
+
+### 🐛 Bug Reports
+
+Se trovi un bug, apri una [issue](https://github.com/tuousername/weekly-planner-cli/issues) includendo:
+
+- Descrizione del problema
+- Passi per riprodurlo
+- Browser e versione
+- Screenshots se possibile
+
+### 💡 Feature Requests
+
+Per nuove funzionalità, apri una [issue](https://github.com/tuousername/weekly-planner-cli/issues) con:
+
+- Descrizione della funzionalità
+- Caso d'uso
+- Mockup/esempi se disponibili
+
+## 📝 Roadmap
+
+- [ ] Export/Import dati (JSON, CSV)
+- [ ] Temi personalizzabili (dark mode)
+- [ ] Notifiche browser
+- [ ] Sincronizzazione cloud
+- [ ] Statistiche settimanali
+- [ ] Drag & drop per riordinare
+- [ ] PWA (Progressive Web App)
+
+## 📄 Licenza
+
+Distribuito sotto licenza MIT. Vedi `LICENSE` per maggiori informazioni.
+
+## 👨‍💻 Autore
+
+**Il tuo nome**
+- GitHub: [@tuousername](https://github.com/tuousername)
+- Email: tua-email@esempio.com
+
+## 🙏 Ringraziamenti
+
+- Ispirato dal design CLI/terminale
+- Font Courier New per l'estetica retro
+- Community open source per feedback e contributi
+
+---
+
+### ⭐ Se ti è piaciuto questo progetto, lascia una stella!
+
+Made with ❤️ and ☕
