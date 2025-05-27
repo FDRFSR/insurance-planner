@@ -167,6 +167,158 @@
             border: 1px solid #ddd;
         }
         
+        .analytics-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+        
+        .analytics-btn:hover {
+            background-color: #004494;
+        }
+        
+        .analytics-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .analytics-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 1rem;
+        }
+        
+        .analytics-header h2 {
+            margin: 0;
+            color: #0056b3;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #0056b3;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .chart-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #0056b3;
+        }
+        
+        .progress-bar {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .category-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .productivity-score {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #0056b3, #007bff);
+            color: white;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-label {
+            font-size: 1.1rem;
+        }
+        
         .urgency-tag {
             display: inline-block;
             padding: 0.2rem 0.4rem;
@@ -505,11 +657,273 @@
         // Avvio applicazione
         document.addEventListener('DOMContentLoaded', init);
         
+        // Analytics Functions
+        function openAnalytics() {
+            generateAnalytics();
+            document.getElementById('analyticsModal').style.display = 'block';
+        }
+        
+        function closeAnalytics() {
+            document.getElementById('analyticsModal').style.display = 'none';
+        }
+        
+        function generateAnalytics() {
+            const stats = calculateStats();
+            updateStatsGrid(stats);
+            updateCategoryChart(stats);
+            updateUrgencyChart(stats);
+            updateWeeklyTrend(stats);
+            updateProductivityScore(stats);
+        }
+        
+        function calculateStats() {
+            const allTasks = [];
+            let totalCompleted = 0;
+            let totalTasks = 0;
+            
+            const categoryStats = {
+                'task': { total: 0, completed: 0 },
+                'call': { total: 0, completed: 0 },
+                'quote': { total: 0, completed: 0 },
+                'claims': { total: 0, completed: 0 }
+            };
+            
+            const urgencyStats = {
+                'bassa': { total: 0, completed: 0 },
+                'media': { total: 0, completed: 0 },
+                'alta': { total: 0, completed: 0 }
+            };
+            
+            const dailyStats = weekDates.map(date => {
+                const dayTasks = tasks[date] || [];
+                const completed = dayTasks.filter(t => t.done).length;
+                return {
+                    date: date,
+                    total: dayTasks.length,
+                    completed: completed,
+                    completionRate: dayTasks.length > 0 ? (completed / dayTasks.length) * 100 : 0
+                };
+            });
+            
+            // Calcola statistiche per tutte le date
+            Object.keys(tasks).forEach(date => {
+                const dayTasks = tasks[date] || [];
+                dayTasks.forEach(task => {
+                    totalTasks++;
+                    allTasks.push(task);
+                    
+                    if (task.done) totalCompleted++;
+                    
+                    // Stats per categoria
+                    const category = task.category || 'task';
+                    if (categoryStats[category]) {
+                        categoryStats[category].total++;
+                        if (task.done) categoryStats[category].completed++;
+                    }
+                    
+                    // Stats per urgenza
+                    const urgency = task.urgency || 'bassa';
+                    if (urgencyStats[urgency]) {
+                        urgencyStats[urgency].total++;
+                        if (task.done) urgencyStats[urgency].completed++;
+                    }
+                });
+            });
+            
+            return {
+                totalTasks,
+                totalCompleted,
+                completionRate: totalTasks > 0 ? (totalCompleted / totalTasks) * 100 : 0,
+                categoryStats,
+                urgencyStats,
+                dailyStats,
+                allTasks
+            };
+        }
+        
+        function updateStatsGrid(stats) {
+            const grid = document.getElementById('statsGrid');
+            
+            const avgTasksPerDay = (stats.totalTasks / 7).toFixed(1);
+            const mostProductiveDay = stats.dailyStats.reduce((max, day) => 
+                day.completed > max.completed ? day : max, stats.dailyStats[0]);
+            
+            const highUrgencyCompleted = stats.urgencyStats.alta.completed;
+            const totalHighUrgency = stats.urgencyStats.alta.total;
+            
+            grid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${stats.totalTasks}</div>
+                    <div class="stat-label">Task Totali</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.totalCompleted}</div>
+                    <div class="stat-label">Completati</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.completionRate.toFixed(0)}%</div>
+                    <div class="stat-label">Tasso Completamento</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${avgTasksPerDay}</div>
+                    <div class="stat-label">Media/Giorno</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${WEEKDAYS[weekDates.indexOf(mostProductiveDay.date)]}</div>
+                    <div class="stat-label">Giorno Top</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${highUrgencyCompleted}/${totalHighUrgency}</div>
+                    <div class="stat-label">Urgenti Risolti</div>
+                </div>
+            `;
+        }
+        
+        function updateCategoryChart(stats) {
+            const chart = document.getElementById('categoryChart');
+            const categories = [
+                { key: 'task', label: '📋 Task', color: '#33691e' },
+                { key: 'call', label: '📞 Call', color: '#0d47a1' },
+                { key: 'quote', label: '💰 Quote', color: '#4a148c' },
+                { key: 'claims', label: '⚠️ Claims', color: '#e65100' }
+            ];
+            
+            chart.innerHTML = categories.map(cat => {
+                const stat = stats.categoryStats[cat.key];
+                const percentage = stat.total > 0 ? (stat.completed / stat.total) * 100 : 0;
+                
+                return `
+                    <div class="category-stats">
+                        <div class="category-label">
+                            <span>${cat.label}</span>
+                            <span>(${stat.completed}/${stat.total})</span>
+                        </div>
+                        <div style="flex: 1; margin-left: 1rem;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" 
+                                     style="width: ${percentage}%; background-color: ${cat.color};">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 0.5rem; font-weight: bold;">
+                            ${percentage.toFixed(0)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateUrgencyChart(stats) {
+            const chart = document.getElementById('urgencyChart');
+            const urgencies = [
+                { key: 'alta', label: '🔴 Alta', color: '#721c24' },
+                { key: 'media', label: '🟡 Media', color: '#856404' },
+                { key: 'bassa', label: '🟢 Bassa', color: '#155724' }
+            ];
+            
+            chart.innerHTML = urgencies.map(urg => {
+                const stat = stats.urgencyStats[urg.key];
+                const percentage = stat.total > 0 ? (stat.completed / stat.total) * 100 : 0;
+                
+                return `
+                    <div class="category-stats">
+                        <div class="category-label">
+                            <span>${urg.label}</span>
+                            <span>(${stat.completed}/${stat.total})</span>
+                        </div>
+                        <div style="flex: 1; margin-left: 1rem;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" 
+                                     style="width: ${percentage}%; background-color: ${urg.color};">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 0.5rem; font-weight: bold;">
+                            ${percentage.toFixed(0)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateWeeklyTrend(stats) {
+            const chart = document.getElementById('weeklyTrend');
+            
+            chart.innerHTML = stats.dailyStats.map((day, index) => {
+                return `
+                    <div class="category-stats">
+                        <div class="category-label">
+                            <span>${WEEKDAYS[index]}</span>
+                            <span>(${day.completed}/${day.total})</span>
+                        </div>
+                        <div style="flex: 1; margin-left: 1rem;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" 
+                                     style="width: ${day.completionRate}%; background-color: #0056b3;">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-left: 0.5rem; font-weight: bold;">
+                            ${day.completionRate.toFixed(0)}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function updateProductivityScore(stats) {
+            const scoreElement = document.getElementById('productivityScore');
+            
+            // Calcolo score basato su vari fattori
+            let score = 0;
+            
+            // Completion rate (40% del punteggio)
+            score += stats.completionRate * 0.4;
+            
+            // Bonus per task ad alta priorità completati (30% del punteggio)
+            const highPriorityRate = stats.urgencyStats.alta.total > 0 ? 
+                (stats.urgencyStats.alta.completed / stats.urgencyStats.alta.total) * 100 : 100;
+            score += highPriorityRate * 0.3;
+            
+            // Consistenza giornaliera (30% del punteggio)
+            const daysWithTasks = stats.dailyStats.filter(d => d.total > 0).length;
+            const consistencyBonus = (daysWithTasks / 7) * 100 * 0.3;
+            score += consistencyBonus;
+            
+            score = Math.min(100, Math.max(0, score));
+            
+            let emoji = '🔥';
+            let message = 'Eccellente!';
+            
+            if (score < 50) {
+                emoji = '📈';
+                message = 'Puoi migliorare';
+            } else if (score < 75) {
+                emoji = '👍';
+                message = 'Buon lavoro!';
+            }
+            
+            scoreElement.innerHTML = `
+                <div class="score-value">${emoji} ${score.toFixed(0)}%</div>
+                <div class="score-label">${message}</div>
+            `;
+        }
+        
+        // Chiudi modal cliccando fuori
+        window.onclick = function(event) {
+            const modal = document.getElementById('analyticsModal');
+            if (event.target === modal) {
+                closeAnalytics();
+            }
+        }
+        
         // Funzioni globali per i click handler
         window.toggleTaskStatus = toggleTaskStatus;
         window.removeTask = removeTask;
         window.handleTaskInput = handleTaskInput;
         window.clearPlaceholder = clearPlaceholder;
+        window.openAnalytics = openAnalytics;
+        window.closeAnalytics = closeAnalytics;
     </script>
 </body>
 </html>
