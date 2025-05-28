@@ -46,18 +46,22 @@
   $: urgentTasks = tasks.filter(t => t.priority === 'alta' && !t.completed).length;
   $: overdueTasks = tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && !t.completed).length;
 
-  // Auto-save con debounce
+  // Auto-save con debounce per evitare salvataggi eccessivi
   let saveTimeout;
   $: {
-    if (tasks && tasks.length >= 0) {
-      if (saveTimeout) clearTimeout(saveTimeout);
+    if (tasks && tasks.length >= 0) { // Verifica che tasks sia definito
+      // Cancella il timeout precedente
+      if (saveTimeout) {
+        clearTimeout(saveTimeout);
+      }
+      // Imposta un nuovo timeout per il salvataggio
       saveTimeout = setTimeout(() => {
         try {
           saveTasks(tasks);
         } catch (error) {
           console.error('Errore nel salvataggio dei task:', error);
         }
-      }, 100);
+      }, 100); // Salva dopo 100ms di inattività
     }
   }
 
@@ -76,63 +80,80 @@
         pending,
         percentage: categoryTasks.length > 0 ? Math.round((completed / categoryTasks.length) * 100) : 0
       };
-    }).filter(cat => cat.total > 0);
+    }); // Rimosso il filtro .filter(cat => cat.total > 0)
   }
 
-  // Inizializza app con dati di esempio se vuoto
+  // Inizializza app con migrazione dati
   function initializeApp() {
     try {
+      console.log('🚀 Inizializzando app...');
       const savedTasks = loadTasks();
       const savedCounter = loadTaskCounter();
 
+      console.log('📥 Task caricati dal localStorage:', savedTasks);
+
       if (savedTasks && savedTasks.length > 0) {
-        tasks = savedTasks.map(task => ({
-          ...task,
-          category: task.category || 'polizze',
-          priority: task.priority || 'media',
-          client: task.client || '',
-          dueDate: task.dueDate || ''
-        }));
-        const maxId = Math.max(...savedTasks.map(t => t.id)) + 1;
-        setTaskIdCounter(Math.max(maxId, savedCounter));
-      } else {
-        // Dati di esempio per la dashboard
-        tasks = [
-          {
-            id: 1,
-            text: 'Rinnovo polizza auto Rossi Mario',
-            category: 'rinnovi',
-            priority: 'alta',
-            client: 'Rossi Mario',
-            dueDate: '2025-06-15',
-            completed: false,
-            createdAt: new Date().toISOString()
-          },
-          {
-            id: 2,
-            text: 'Gestione sinistro danni RCA - Targa AB123CD',
-            category: 'sinistri',
-            priority: 'alta',
-            client: 'Verdi Giuseppe',
-            dueDate: '2025-06-02',
-            completed: false,
-            createdAt: new Date().toISOString()
-          },
-          {
-            id: 3,
-            text: 'Preventivo assicurazione casa Bianchi',
-            category: 'preventivi',
-            priority: 'media',
-            client: 'Bianchi Anna',
-            dueDate: '2025-06-08',
-            completed: true,
-            createdAt: new Date().toISOString()
+        console.log('🔄 Migrando', savedTasks.length, 'task esistenti...');
+
+        // Migrazione robusta dei task esistenti
+        tasks = savedTasks.map((task, index) => {
+          console.log(`🔧 Migrando task ${index + 1}:`, task);
+
+          const migratedTask = {
+            id: task.id || Date.now() + index,
+            text: task.text || 'Task senza testo',
+            completed: task.completed || false,
+            createdAt: task.createdAt || new Date().toISOString(),
+            // Nuovi campi assicurativi
+            category: task.category || 'polizze', // Default se mancante
+            priority: task.priority || 'media',   // Default se mancante
+            client: task.client || '',
+            dueDate: task.dueDate || ''
+          };
+
+          // Verifica che la categoria sia valida
+          if (!categories[migratedTask.category]) {
+            console.warn(`⚠️ Categoria non valida per task ${task.id}: ${migratedTask.category}, usando 'polizze'`);
+            migratedTask.category = 'polizze';
           }
-        ];
-        setTaskIdCounter(savedCounter || 4);
+
+          // Verifica che la priorità sia valida
+          if (!priorities[migratedTask.priority]) {
+            console.warn(`⚠️ Priorità non valida per task ${task.id}: ${migratedTask.priority}, usando 'media'`);
+            migratedTask.priority = 'media';
+          }
+
+          console.log(`✅ Task migrato:`, migratedTask);
+          return migratedTask;
+        });
+
+        console.log('📊 Task migrati totali:', tasks.length);
+        console.log('🏷️ Task con categoria:', tasks.filter(t => t.category).length);
+
+        // Salva i task migrati per la prossima volta
+        saveTasks(tasks);
+
+        const maxId = Math.max(...tasks.map(t => t.id)) + 1;
+        setTaskIdCounter(Math.max(maxId, savedCounter || 1));
+
+        console.log('✅ Migrazione completata, task caricati:', tasks.length);
+      } else {
+        // Inizializza con array vuoto se non ci sono task salvati
+        console.log('📭 Nessun task trovato, inizializzando con array vuoto');
+        tasks = [];
+        setTaskIdCounter(savedCounter || 1);
       }
+
+      // Forza aggiornamento delle statistiche
+      setTimeout(() => {
+        console.log('📊 Statistiche finali:');
+        console.log('- Tasks totali:', tasks.length);
+        console.log('- Tasks con categoria:', tasks.filter(t => t.category).length);
+        console.log('- Statistiche categorie:', getCategoryStats());
+      }, 100);
+
     } catch (error) {
-      console.error('Errore nell\'inizializzazione:', error);
+      console.error('❌ Errore nell\'inizializzazione:', error);
       tasks = [];
       setTaskIdCounter(1);
     }
@@ -271,6 +292,7 @@
       >
         📋 Attività
       </button>
+
     </div>
   </header>
 
@@ -333,40 +355,46 @@
     <!-- Analisi Categorie -->
     <div class="dashboard-card">
       <h3>📈 Analisi per Categoria</h3>
-      <div class="category-grid">
-        {#each categoryStats as category}
-          <div class="category-card">
-            <div class="category-header">
-              <div class="category-info">
-                <span class="category-icon">{category.icon}</span>
-                <span class="category-name">{category.name}</span>
+      {#if tasks.length === 0}
+        <div class="category-empty-state">
+          <p>Aggiungi delle attività per vedere l'analisi per categoria</p>
+        </div>
+      {:else}
+        <div class="category-grid">
+          {#each categoryStats as category}
+            <div class="category-card">
+              <div class="category-header">
+                <div class="category-info">
+                  <span class="category-icon">{category.icon}</span>
+                  <span class="category-name">{category.name}</span>
+                </div>
+                <span class="category-percentage" style="background-color: {category.color}20; color: {category.color}">
+                  {category.percentage}%
+                </span>
               </div>
-              <span class="category-percentage" style="background-color: {category.color}20; color: {category.color}">
-                {category.percentage}%
-              </span>
-            </div>
 
-            <div class="category-stats">
-              <div class="stat-row">
-                <span>Totale:</span>
-                <span class="stat-value">{category.total}</span>
+              <div class="category-stats">
+                <div class="stat-row">
+                  <span>Totale:</span>
+                  <span class="stat-value">{category.total}</span>
+                </div>
+                <div class="stat-row">
+                  <span>Completate:</span>
+                  <span class="stat-value green">{category.completed}</span>
+                </div>
+                <div class="stat-row">
+                  <span>In sospeso:</span>
+                  <span class="stat-value yellow">{category.pending}</span>
+                </div>
               </div>
-              <div class="stat-row">
-                <span>Completate:</span>
-                <span class="stat-value green">{category.completed}</span>
-              </div>
-              <div class="stat-row">
-                <span>In sospeso:</span>
-                <span class="stat-value yellow">{category.pending}</span>
-              </div>
-            </div>
 
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: {category.percentage}%; background-color: {category.color}"></div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: {category.percentage}%; background-color: {category.color}"></div>
+              </div>
             </div>
-          </div>
-        {/each}
-      </div>
+          {/each}
+        </div>
+      {/if}
     </div>
 
     <!-- Attività Recenti -->
@@ -729,6 +757,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
+  }
+
+  .category-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--color-text-muted);
+    font-style: italic;
   }
 
   .category-card {

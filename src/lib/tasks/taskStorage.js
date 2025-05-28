@@ -1,112 +1,125 @@
-// src/lib/tasks/taskStorage.js
+// taskStorage.js - Gestione localStorage per i task
+
+const TASKS_KEY = 'tasks';
+const COUNTER_KEY = 'taskCounter';
 
 /**
- * Task storage management
- * Note: In Claude.ai artifacts, localStorage is not supported
- * This code would work in a normal browser environment
- */
-
-const STORAGE_KEY = 'modern-todo-tasks';
-const COUNTER_KEY = 'modern-todo-counter';
-
-/**
- * Saves tasks to storage
- * @param {Array} tasks - Array of tasks to save
+ * Salva i task nel localStorage
+ * @param {Array} tasks - Array di task da salvare
  */
 export function saveTasks(tasks) {
   try {
-    // In a real environment, this would use localStorage
-    // localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-    console.log('Tasks would be saved to localStorage:', tasks);
+    console.log('💾 Salvando tasks nel localStorage...', tasks.length, 'tasks');
+    const jsonData = JSON.stringify(tasks);
+    localStorage.setItem(TASKS_KEY, jsonData);
+
+    // Verifica che il salvataggio sia andato a buon fine
+    const saved = localStorage.getItem(TASKS_KEY);
+    if (saved) {
+      console.log('✅ Tasks salvati con successo nel localStorage');
+    } else {
+      console.error('❌ Errore: Tasks non salvati nel localStorage');
+    }
   } catch (error) {
-    console.error('Error saving tasks:', error);
+    console.error('❌ Errore nel salvataggio dei tasks:', error);
+    // In caso di errore, proviamo con una strategia alternativa
+    try {
+      // Fallback: prova a salvare come stringa semplice
+      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks || []));
+    } catch (fallbackError) {
+      console.error('❌ Anche il fallback è fallito:', fallbackError);
+    }
   }
 }
 
 /**
- * Loads tasks from storage
- * @returns {Array} Array of tasks
+ * Carica i task dal localStorage
+ * @returns {Array} Array di task caricati
  */
 export function loadTasks() {
   try {
-    // In a real environment, this would use localStorage
-    // const stored = localStorage.getItem(STORAGE_KEY);
-    // return stored ? JSON.parse(stored) : [];
-    console.log('Tasks would be loaded from localStorage');
-    return [];
+    console.log('📥 Caricando tasks dal localStorage...');
+    const jsonData = localStorage.getItem(TASKS_KEY);
+
+    if (!jsonData) {
+      console.log('📭 Nessun task trovato nel localStorage');
+      return [];
+    }
+
+    const tasks = JSON.parse(jsonData);
+    console.log('✅ Tasks caricati dal localStorage:', tasks.length, 'tasks');
+    return Array.isArray(tasks) ? tasks : [];
   } catch (error) {
-    console.error('Error loading tasks:', error);
+    console.error('❌ Errore nel caricamento dei tasks:', error);
     return [];
   }
 }
 
 /**
- * Saves task ID counter to storage
- * @param {number} counter - Counter value to save
+ * Salva il contatore degli ID nel localStorage
+ * @param {number} counter - Valore del contatore da salvare
  */
 export function saveTaskCounter(counter) {
   try {
-    // localStorage.setItem(COUNTER_KEY, counter.toString());
-    console.log('Counter would be saved to localStorage:', counter);
+    console.log('📊 Salvando contatore task:', counter);
+    localStorage.setItem(COUNTER_KEY, counter.toString());
   } catch (error) {
-    console.error('Error saving counter:', error);
+    console.error('❌ Errore nel salvataggio del contatore:', error);
   }
 }
 
 /**
- * Loads task ID counter from storage
- * @returns {number} Counter value
+ * Carica il contatore degli ID dal localStorage
+ * @returns {number} Valore del contatore caricato
  */
 export function loadTaskCounter() {
   try {
-    // const stored = localStorage.getItem(COUNTER_KEY);
-    // return stored ? parseInt(stored, 10) : 0;
-    console.log('Counter would be loaded from localStorage');
-    return 0;
+    const saved = localStorage.getItem(COUNTER_KEY);
+    const counter = saved ? parseInt(saved, 10) : 1;
+    console.log('📊 Contatore task caricato:', counter);
+    return counter;
   } catch (error) {
-    console.error('Error loading counter:', error);
-    return 0;
+    console.error('❌ Errore nel caricamento del contatore:', error);
+    return 1;
   }
 }
 
 /**
- * Clears all tasks from storage
+ * Cancella tutti i dati dal localStorage (per debug)
  */
-export function clearTasks() {
+export function clearAllData() {
   try {
-    // localStorage.removeItem(STORAGE_KEY);
-    // localStorage.removeItem(COUNTER_KEY);
-    console.log('Tasks would be cleared from localStorage');
+    localStorage.removeItem(TASKS_KEY);
+    localStorage.removeItem(COUNTER_KEY);
+    console.log('🗑️ Tutti i dati sono stati cancellati dal localStorage');
   } catch (error) {
-    console.error('Error clearing tasks:', error);
+    console.error('❌ Errore nella cancellazione dei dati:', error);
   }
 }
 
 /**
- * Exports tasks as JSON string
- * @param {Array} tasks - Tasks to export
- * @returns {string} JSON string
+ * Verifica lo stato del localStorage (per debug)
+ * @returns {Object} Oggetto con info sullo stato del localStorage
  */
-export function exportTasks(tasks) {
+export function getStorageInfo() {
   try {
-    return JSON.stringify(tasks, null, 2);
-  } catch (error) {
-    console.error('Error exporting tasks:', error);
-    return '[]';
-  }
-}
+    const tasks = localStorage.getItem(TASKS_KEY);
+    const counter = localStorage.getItem(COUNTER_KEY);
 
-/**
- * Imports tasks from JSON string
- * @param {string} jsonString - JSON string to import
- * @returns {Array} Array of tasks
- */
-export function importTasks(jsonString) {
-  try {
-    const tasks = JSON.parse(jsonString);
-    return Array.isArray(tasks) ? tasks : [];
+    return {
+      tasksExists: !!tasks,
+      tasksLength: tasks ? JSON.parse(tasks).length : 0,
+      counter: counter ? parseInt(counter, 10) : null,
+      storageSupported: typeof(Storage) !== "undefined"
+    };
   } catch (error) {
-    console.error('Error importing tasks:', error);
-    return [];
+    console.error('❌ Errore nella verifica dello storage:', error);
+    return {
+      tasksExists: false,
+      tasksLength: 0,
+      counter: null,
+      storageSupported: false,
+      error: error.message
+    };
   }
 }
