@@ -1,8 +1,8 @@
 # 📝 Modern To-Do List
 
-Una to-do list elegante e moderna con interfaccia grafica accattivante, costruita con HTML, CSS e JavaScript vanilla.
+Una to-do list elegante e moderna con interfaccia grafica accattivante, costruita con Svelte, TypeScript e Vite.
 
-![Modern To-Do List](https://img.shields.io/badge/Status-Completed-brightgreen) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Modern To-Do List](https://img.shields.io/badge/Status-Completed-brightgreen) ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?logo=svelte&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
 ## ✨ Caratteristiche
 
@@ -16,7 +16,7 @@ Una to-do list elegante e moderna con interfaccia grafica accattivante, costruit
 
 ## 🚀 Demo
 
-Apri semplicemente il file `index.html` nel tuo browser per vedere l'applicazione in azione!
+Dopo aver installato le dipendenze e avviato il server di sviluppo, l'applicazione sarà disponibile su `http://localhost:5173`
 
 ## 🎨 Caratteristiche UI/UX
 
@@ -39,9 +39,11 @@ Apri semplicemente il file `index.html` nel tuo browser per vedere l'applicazion
 
 ## 🛠️ Tecnologie Utilizzate
 
+- **Svelte**: Framework JavaScript moderno e reattivo
+- **TypeScript**: Superset tipizzato di JavaScript
+- **Vite**: Build tool veloce per sviluppo e produzione
 - **HTML5**: Struttura semantica
-- **CSS3**: Styling avanzato con Flexbox, Grid, animazioni e transizioni
-- **JavaScript ES6+**: Logica dell'applicazione con moderne funzionalità
+- **CSS3**: Styling avanzato con Flexbox, animazioni e transizioni
 - **Font Awesome 6**: Libreria di icone
 
 ## 📱 Funzionalità
@@ -63,9 +65,18 @@ Apri semplicemente il file `index.html` nel tuo browser per vedere l'applicazion
 ```
 modern-todo-list/
 │
-├── index.html          # File principale con HTML, CSS e JavaScript
-├── README.md           # Documentazione del progetto
-└── screenshot.png      # Screenshot dell'applicazione (opzionale)
+├── index.html              # File principale HTML
+├── package.json            # Dipendenze e script npm
+├── package-lock.json       # Lock file delle dipendenze
+├── README.md               # Documentazione del progetto
+├── vite.config.ts          # Configurazione Vite
+├── svelte.config.js        # Configurazione Svelte
+├── tsconfig.json           # Configurazione TypeScript
+├── tsconfig.app.json       # Config TypeScript per l'app
+├── tsconfig.node.json      # Config TypeScript per Node
+├── node_modules/           # Dipendenze installate
+├── public/                 # Asset statici
+└── src/                    # Codice sorgente dell'applicazione
 ```
 
 ## 🚀 Come Usare
@@ -80,11 +91,30 @@ modern-todo-list/
    cd modern-todo-list
    ```
 
-3. **Apri nel browser**:
+3. **Installa le dipendenze**:
    ```bash
-   open index.html
+   npm install
    ```
-   oppure trascina il file nel browser
+
+4. **Avvia il server di sviluppo**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Apri nel browser**:
+   L'applicazione sarà disponibile su `http://localhost:5173`
+
+### Build per produzione
+
+```bash
+npm run build
+```
+
+### Preview della build
+
+```bash
+npm run preview
+```
 
 ## 💡 Funzionalità Future
 
