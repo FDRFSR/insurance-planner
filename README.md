@@ -1,156 +1,127 @@
-# 📅 Weekly Planner CLI-Style
+# 📝 Modern To-Do List
 
-Un planner settimanale minimalista con stile CLI, perfetto per organizzare le tue attività con un sistema di tag avanzato.
+Una to-do list elegante e moderna con interfaccia grafica accattivante, costruita con HTML, CSS e JavaScript vanilla.
 
-![Demo](https://img.shields.io/badge/demo-live-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+![Modern To-Do List](https://img.shields.io/badge/Status-Completed-brightgreen) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
 ## ✨ Caratteristiche
 
-- **🎯 Sistema di tag doppio**: Categorizza le attività per tipo e urgenza
-- **📱 Responsive Design**: Funziona perfettamente su desktop e mobile  
-- **⚡ CLI-Style**: Design minimalista ispirato ai terminali
-- **🔄 Aggiornamento automatico**: La settimana si aggiorna automaticamente
-- **💾 Persistenza dati**: I dati vengono salvati automaticamente (localStorage)
-- **🌟 UX fluida**: Transizioni smooth e feedback visivi
+- **Design Moderno**: Interfaccia glassmorphism con gradiente di sfondo
+- **Animazioni Fluide**: Transizioni smooth per ogni interazione
+- **Responsive**: Completamente ottimizzata per dispositivi mobili
+- **Contatori Dinamici**: Tracciamento dei task totali e completati
+- **Stato Vuoto**: Messaggio incoraggiante quando non ci sono task
+- **Icone FontAwesome**: Interfaccia visivamente accattivante
+- **Feedback Visivo**: Hover effects e animazioni per ogni azione
 
-## 🏷️ Sistema di Tag
+## 🚀 Demo
 
-### Categoria (Tipo di attività)
-- **📋 Task** - Attività generiche
-- **📞 Call** - Chiamate da effettuare  
-- **💰 Quote** - Preventivi e offerte
-- **⚠️ Claims** - Reclami e pratiche urgenti
+Apri semplicemente il file `index.html` nel tuo browser per vedere l'applicazione in azione!
 
-### Urgenza (Priorità)
-- **🟢 Bassa** - Non urgente
-- **🟡 Media** - Priorità normale
-- **🔴 Alta** - Urgente e importante
+## 🎨 Caratteristiche UI/UX
 
-## 🚀 Come usare
+### Design Visivo
+- Sfondo con gradiente blu-viola
+- Card con effetto glassmorphism e ombre dinamiche
+- Palette di colori coerente (blu per azioni, verde per completati, rosso per eliminazione)
+- Typography elegante con font Segoe UI
 
-1. **Seleziona la categoria** dal primo menu a tendina
-2. **Scegli il livello di urgenza** dal secondo menu
-3. **Scrivi l'attività** nel campo di testo
-4. **Premi Invio** per aggiungere
-5. **Click sulla checkbox** per marcare come completata
-6. **Click sulla ✕** per eliminare
+### Animazioni
+- **Slide-in**: Nuovi task appaiono con animazione fluida
+- **Slide-out**: Task eliminati scompaiono con transizione
+- **Hover Effects**: Pulsanti e elementi interattivi con effetti al passaggio del mouse
+- **Scale Effects**: Checkbox e pulsanti con effetto zoom
 
-## 📦 Installazione
+### Responsive Design
+- Layout adattivo per schermi di tutte le dimensioni
+- Input e pulsanti ottimizzati per dispositivi touch
+- Scrollbar personalizzata per lista task lunga
 
-### Opzione 1: Download diretto
-```bash
-git clone https://github.com/tuousername/weekly-planner-cli.git
-cd weekly-planner-cli
-# Apri index.html nel browser
+## 🛠️ Tecnologie Utilizzate
+
+- **HTML5**: Struttura semantica
+- **CSS3**: Styling avanzato con Flexbox, Grid, animazioni e transizioni
+- **JavaScript ES6+**: Logica dell'applicazione con moderne funzionalità
+- **Font Awesome 6**: Libreria di icone
+
+## 📱 Funzionalità
+
+### Gestione Task
+- ✅ **Aggiungi Task**: Inserisci un nuovo task tramite input o premendo Invio
+- ✅ **Completa Task**: Clicca sul checkbox circolare per segnare come completato
+- ✅ **Elimina Task**: Rimuovi task con animazione di uscita
+- ✅ **Contatori**: Visualizza numero di task totali e completati
+
+### Controlli
+- Input con placeholder e validazione
+- Limite di 100 caratteri per task
+- Gestione dello stato vuoto
+- Prevenzione di task vuoti
+
+## 🏗️ Struttura del Progetto
+
+```
+modern-todo-list/
+│
+├── index.html          # File principale con HTML, CSS e JavaScript
+├── README.md           # Documentazione del progetto
+└── screenshot.png      # Screenshot dell'applicazione (opzionale)
 ```
 
-### Opzione 2: Hosting locale
-```bash
-# Con Python
-python -m http.server 8000
+## 🚀 Come Usare
 
-# Con Node.js
-npx serve .
+1. **Clona il repository**:
+   ```bash
+   git clone https://github.com/FDRFSR/modern-todo-list.git
+   ```
 
-# Visita http://localhost:8000
-```
+2. **Naviga nella cartella**:
+   ```bash
+   cd modern-todo-list
+   ```
 
-## 🛠️ Tecnologie utilizzate
+3. **Apri nel browser**:
+   ```bash
+   open index.html
+   ```
+   oppure trascina il file nel browser
 
-- **HTML5** - Struttura semantica
-- **CSS3** - Styling moderno con transizioni
-- **Vanilla JavaScript** - Logica dell'applicazione
-- **LocalStorage API** - Persistenza dei dati
-- **Responsive Design** - Compatibilità mobile
+## 💡 Funzionalità Future
 
-## 📱 Compatibilità
-
-- ✅ Chrome/Chromium 70+
-- ✅ Firefox 65+
-- ✅ Safari 12+
-- ✅ Edge 79+
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 🎨 Personalizzazione
-
-### Aggiungere nuove categorie
-Modifica l'array delle categorie nel JavaScript:
-
-```javascript
-// Nel codice, cerca la sezione delle categorie
-const categories = {
-    'meeting': '🤝 Meeting',
-    'email': '📧 Email',
-    // Aggiungi le tue categorie
-};
-```
-
-### Modificare i colori
-I colori dei tag sono definiti nel CSS:
-
-```css
-.category-nuova {
-    background-color: #tuo-colore;
-    color: #tuo-testo;
-    border: 1px solid #tuo-bordo;
-}
-```
+- [ ] Persistenza dati con localStorage
+- [ ] Categorizzazione dei task
+- [ ] Date di scadenza
+- [ ] Ricerca e filtri
+- [ ] Modalità dark/light
+- [ ] Sincronizzazione cloud
+- [ ] Notifiche desktop
+- [ ] Drag & drop per riordinare
 
 ## 🤝 Contribuire
 
-I contributi sono benvenuti! Per contribuire:
+I contributi sono benvenuti! Se vuoi migliorare il progetto:
 
-1. Fork del progetto
-2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit delle modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. Push del branch (`git push origin feature/AmazingFeature`)
+1. Fai un fork del repository
+2. Crea un branch per la tua feature (`git checkout -b feature/nuova-feature`)
+3. Committa le modifiche (`git commit -am 'Aggiunge nuova feature'`)
+4. Pusha sul branch (`git push origin feature/nuova-feature`)
 5. Apri una Pull Request
-
-### 🐛 Bug Reports
-
-Se trovi un bug, apri una [issue](https://github.com/tuousername/weekly-planner-cli/issues) includendo:
-
-- Descrizione del problema
-- Passi per riprodurlo
-- Browser e versione
-- Screenshots se possibile
-
-### 💡 Feature Requests
-
-Per nuove funzionalità, apri una [issue](https://github.com/tuousername/weekly-planner-cli/issues) con:
-
-- Descrizione della funzionalità
-- Caso d'uso
-- Mockup/esempi se disponibili
-
-## 📝 Roadmap
-
-- [ ] Export/Import dati (JSON, CSV)
-- [ ] Temi personalizzabili (dark mode)
-- [ ] Notifiche browser
-- [ ] Sincronizzazione cloud
-- [ ] Statistiche settimanali
-- [ ] Drag & drop per riordinare
-- [ ] PWA (Progressive Web App)
 
 ## 📄 Licenza
 
-Distribuito sotto licenza MIT. Vedi `LICENSE` per maggiori informazioni.
+Questo progetto è sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
 
 ## 👨‍💻 Autore
 
-**Il tuo nome**
-- GitHub: [@tuousername](https://github.com/tuousername)
-- Email: tua-email@esempio.com
+**Il Tuo Nome**
+- GitHub: [@FDRFSR](https://github.com/FDRFSR)
+- Email: f.fusarri at gmail.com
 
 ## 🙏 Ringraziamenti
 
-- Ispirato dal design CLI/terminale
-- Font Courier New per l'estetica retro
-- Community open source per feedback e contributi
+- [Font Awesome](https://fontawesome.com/) per le icone
+- Ispirazione dal design moderno delle app mobile
 
 ---
 
-### ⭐ Se ti è piaciuto questo progetto, lascia una stella!
-
-Made with ❤️ and ☕
+⭐ **Se ti è piaciuto questo progetto, lascia una stella!** ⭐
