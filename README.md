@@ -1,157 +1,238 @@
-# 📝 Modern To-Do List
+# 🏢 Dashboard Assicurativa
 
-Una to-do list elegante e moderna con interfaccia grafica accattivante, costruita con Svelte, TypeScript e Vite.
+Una **dashboard professionale per il settore assicurativo** sviluppata in Svelte, che combina la gestione di attività quotidiane con analytics avanzate e funzionalità specifiche per agenti e broker assicurativi.
 
-![Modern To-Do List](https://img.shields.io/badge/Status-Completed-brightgreen) ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?logo=svelte&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+## ✨ Caratteristiche Principali
 
-## ✨ Caratteristiche
+### 📊 **Dashboard Analytics**
+- **5 KPI Cards** con metriche in tempo reale
+- **Analisi per categoria** con progress bar animate
+- **Attività recenti** con indicatori di stato
+- **Statistiche di completamento** per ogni tipologia
 
-- **Design Moderno**: Interfaccia glassmorphism con gradiente di sfondo
-- **Animazioni Fluide**: Transizioni smooth per ogni interazione
-- **Responsive**: Completamente ottimizzata per dispositivi mobili
-- **Contatori Dinamici**: Tracciamento dei task totali e completati
-- **Stato Vuoto**: Messaggio incoraggiante quando non ci sono task
-- **Icone FontAwesome**: Interfaccia visivamente accattivante
-- **Feedback Visivo**: Hover effects e animazioni per ogni azione
+### 🛡️ **Categorie Assicurative Specifiche**
+- **Polizze** 🛡️ - Gestione contratti assicurativi
+- **Sinistri** ⚠️ - Pratiche di risarcimento e liquidazioni
+- **Rinnovi** 🔄 - Scadenze e rinnovi polizze
+- **Preventivi** 💰 - Quotazioni e offerte commerciali
+- **Controlli** 📋 - Verifiche documentali e audit
+- **Clienti** 👥 - Gestione relazioni e follow-up
 
-## 🚀 Demo
+### 🎯 **Sistema di Priorità Intelligente**
+- **Alta** (🔴) - Attività urgenti e scadenze critiche
+- **Media** (🟡) - Attività standard da completare
+- **Bassa** (🟢) - Attività di routine e follow-up
 
-Dopo aver installato le dipendenze e avviato il server di sviluppo, l'applicazione sarà disponibile su `http://localhost:5173`
+### 📅 **Gestione Avanzata Scadenze**
+- **Alert automatici** per attività scadute
+- **Campo cliente** per collegare attività a specifici assicurati
+- **Date di scadenza** con indicatori visivi
+- **Ordinamento intelligente** per priorità e urgenza
 
-## 🎨 Caratteristiche UI/UX
+## 🚀 Funzionalità Tecniche
 
-### Design Visivo
-- Sfondo con gradiente blu-viola
-- Card con effetto glassmorphism e ombre dinamiche
-- Palette di colori coerente (blu per azioni, verde per completati, rosso per eliminazione)
-- Typography elegante con font Segoe UI
+### ⚡ **Ottimizzazioni Prestazionali**
+- **Debounce** per salvataggio automatico e validazione
+- **Protezione anti-freeze** browser
+- **Gestione errori** completa
+- **Cleanup automatico** di timeout e listener
 
-### Animazioni
-- **Slide-in**: Nuovi task appaiono con animazione fluida
-- **Slide-out**: Task eliminati scompaiono con transizione
-- **Hover Effects**: Pulsanti e elementi interattivi con effetti al passaggio del mouse
-- **Scale Effects**: Checkbox e pulsanti con effetto zoom
+### 🎨 **Design Moderno**
+- **Tema scuro** elegante e professionale
+- **Animazioni fluide** per interazioni
+- **Design responsive** per desktop e mobile
+- **Componenti glassmorphism** con backdrop blur
 
-### Responsive Design
-- Layout adattivo per schermi di tutte le dimensioni
-- Input e pulsanti ottimizzati per dispositivi touch
-- Scrollbar personalizzata per lista task lunga
+### 💾 **Persistenza Dati**
+- **Local Storage** per mantenere dati tra sessioni
+- **Auto-save** con debounce per evitare sovraccarichi
+- **Backup automatico** delle attività
+- **Ripristino** dati in caso di errori
 
-## 🛠️ Tecnologie Utilizzate
+## 🏗️ Installazione e Setup
 
-- **Svelte**: Framework JavaScript moderno e reattivo
-- **TypeScript**: Superset tipizzato di JavaScript
-- **Vite**: Build tool veloce per sviluppo e produzione
-- **HTML5**: Struttura semantica
-- **CSS3**: Styling avanzato con Flexbox, animazioni e transizioni
-- **Font Awesome 6**: Libreria di icone
-
-## 📱 Funzionalità
-
-### Gestione Task
-- ✅ **Aggiungi Task**: Inserisci un nuovo task tramite input o premendo Invio
-- ✅ **Completa Task**: Clicca sul checkbox circolare per segnare come completato
-- ✅ **Elimina Task**: Rimuovi task con animazione di uscita
-- ✅ **Contatori**: Visualizza numero di task totali e completati
-
-### Controlli
-- Input con placeholder e validazione
-- Limite di 100 caratteri per task
-- Gestione dello stato vuoto
-- Prevenzione di task vuoti
-
-## 🏗️ Struttura del Progetto
-
-```
-modern-todo-list/
-│
-├── index.html              # File principale HTML
-├── package.json            # Dipendenze e script npm
-├── package-lock.json       # Lock file delle dipendenze
-├── README.md               # Documentazione del progetto
-├── vite.config.ts          # Configurazione Vite
-├── svelte.config.js        # Configurazione Svelte
-├── tsconfig.json           # Configurazione TypeScript
-├── tsconfig.app.json       # Config TypeScript per l'app
-├── tsconfig.node.json      # Config TypeScript per Node
-├── node_modules/           # Dipendenze installate
-├── public/                 # Asset statici
-└── src/                    # Codice sorgente dell'applicazione
-```
-
-## 🚀 Come Usare
-
-1. **Clona il repository**:
-   ```bash
-   git clone https://github.com/FDRFSR/modern-todo-list.git
-   ```
-
-2. **Naviga nella cartella**:
-   ```bash
-   cd modern-todo-list
-   ```
-
-3. **Installa le dipendenze**:
-   ```bash
-   npm install
-   ```
-
-4. **Avvia il server di sviluppo**:
-   ```bash
-   npm run dev
-   ```
-
-5. **Apri nel browser**:
-   L'applicazione sarà disponibile su `http://localhost:5173`
-
-### Build per produzione
-
+### Prerequisiti
 ```bash
+Node.js >= 16.0.0
+npm >= 8.0.0
+```
+
+### Installazione
+```bash
+# Clona il repository
+git clone https://github.com/tuo-username/dashboard-assicurativa.git
+
+# Entra nella directory del progetto
+cd dashboard-assicurativa
+
+# Installa le dipendenze
+npm install
+
+# Avvia il server di sviluppo
+npm run dev
+```
+
+### Build per Produzione
+```bash
+# Crea la build ottimizzata
 npm run build
-```
 
-### Preview della build
-
-```bash
+# Avvia l'anteprima della build
 npm run preview
 ```
 
-## 💡 Funzionalità Future
+## 📁 Struttura del Progetto
 
-- [ ] Persistenza dati con localStorage
-- [ ] Categorizzazione dei task
-- [ ] Date di scadenza
-- [ ] Ricerca e filtri
-- [ ] Modalità dark/light
-- [ ] Sincronizzazione cloud
-- [ ] Notifiche desktop
-- [ ] Drag & drop per riordinare
+```
+src/
+├── App.svelte                 # Componente principale con dashboard
+├── lib/
+│   ├── components/
+│   │   └── ThemeToggle.svelte # Componente toggle tema (se necessario)
+│   ├── tasks/
+│   │   ├── taskModel.js       # Modello dati task
+│   │   ├── taskStorage.js     # Gestione localStorage
+│   │   └── taskUtils.js       # Utilità per manipolazione task
+│   ├── validation/
+│   │   └── validateInput.js   # Validazione input utente
+│   └── date/
+│       └── formatDate.js      # Formattazione date
+├── stores/                    # Store Svelte per stato globale
+└── main.js                    # Entry point applicazione
+```
+
+## 🎮 Come Utilizzare
+
+### 1. **Vista Dashboard**
+- Visualizza **metriche aggregate** di tutte le attività
+- Monitora **statistiche per categoria** con progress bar
+- Controlla **attività recenti** e il loro stato
+- Identifica rapidamente **attività urgenti e scadute**
+
+### 2. **Gestione Attività**
+- **Aggiungi nuove attività** con categoria, priorità, cliente e scadenza
+- **Completa attività** con un semplice click
+- **Elimina attività** non più necessarie
+- **Visualizza dettagli completi** per ogni attività
+
+### 3. **Funzionalità Avanzate**
+- **Filtraggio automatico** per priorità e scadenze
+- **Ordinamento intelligente** delle attività
+- **Indicatori visivi** per stato e urgenza
+- **Validazione input** in tempo reale
+
+## 📊 Metriche Monitorate
+
+| Metrica | Descrizione |
+|---------|-------------|
+| **Totale Attività** | Numero complessivo di attività nel sistema |
+| **Completate** | Attività portate a termine con successo |
+| **In Sospeso** | Attività ancora da completare |
+| **Urgenti** | Attività con priorità alta non completate |
+| **Scadute** | Attività con data di scadenza superata |
+
+## 🛠️ Tecnologie Utilizzate
+
+- **[Svelte](https://svelte.dev/)** - Framework frontend reattivo
+- **[Vite](https://vitejs.dev/)** - Build tool veloce
+- **CSS3** - Styling moderno con variabili e animazioni
+- **LocalStorage API** - Persistenza dati lato client
+- **JavaScript ES6+** - Logica applicazione moderna
+
+## 🎨 Sistema di Design
+
+### Palette Colori (Tema Scuro)
+```css
+--color-primary: #7c3aed     /* Viola principale */
+--color-secondary: #8b5cf6   /* Viola secondario */
+--color-accent: #10b981      /* Verde accento */
+--color-danger: #ef4444      /* Rosso pericolo */
+--color-warning: #f59e0b     /* Giallo avviso */
+--color-info: #3b82f6        /* Blu informazioni */
+```
+
+### Tipografia
+- **Font Family**: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+- **Font Weights**: 400 (normale), 500 (medium), 600 (semi-bold), 700 (bold)
+
+## 🔧 Configurazione Avanzata
+
+### Personalizzazione Categorie
+Per aggiungere nuove categorie assicurative, modifica l'oggetto `categories` in `App.svelte`:
+
+```javascript
+const categories = {
+  tuaCategoria: { 
+    name: 'Nome Categoria', 
+    icon: '🔍', 
+    color: '#hexcolor' 
+  }
+};
+```
+
+### Personalizzazione Priorità
+Per modificare i livelli di priorità:
+
+```javascript
+const priorities = {
+  tuaPriorita: { 
+    name: 'Nome Priorità', 
+    color: '#hexcolor', 
+    urgency: 4 
+  }
+};
+```
+
+## 🐛 Risoluzione Problemi
+
+### Problemi Comuni
+
+**Q: L'applicazione non salva i dati**
+A: Verifica che il browser supporti localStorage e che non sia in modalità privata.
+
+**Q: Le animazioni sono lente**
+A: Controlla le prestazioni del browser e disabilita temporaneamente le animazioni CSS.
+
+**Q: I dati non si caricano all'avvio**
+A: Verifica la console per errori JavaScript e controlla l'integrità dei dati in localStorage.
+
+### Debug Mode
+Per attivare il debug mode, aggiungi alla console:
+```javascript
+localStorage.setItem('debug', 'true');
+```
 
 ## 🤝 Contribuire
 
-I contributi sono benvenuti! Se vuoi migliorare il progetto:
+1. **Fork** il progetto
+2. **Crea** un branch per la feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** le modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** al branch (`git push origin feature/AmazingFeature`)
+5. **Apri** una Pull Request
 
-1. Fai un fork del repository
-2. Crea un branch per la tua feature (`git checkout -b feature/nuova-feature`)
-3. Committa le modifiche (`git commit -am 'Aggiunge nuova feature'`)
-4. Pusha sul branch (`git push origin feature/nuova-feature`)
-5. Apri una Pull Request
+### Linee Guida Contribuzione
+- Mantieni lo **stile di codice** consistente
+- Aggiungi **test** per nuove funzionalità
+- Aggiorna la **documentazione** quando necessario
+- Segui i **conventional commits** per i messaggi
 
 ## 📄 Licenza
 
-Questo progetto è sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
+Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
 
-## 👨‍💻 Autore
+## 📞 Contatti
 
-**Il Tuo Nome**
-- GitHub: [@FDRFSR](https://github.com/FDRFSR)
-- Email: f.fusarri at gmail.com
-
-## 🙏 Ringraziamenti
-
-- [Font Awesome](https://fontawesome.com/) per le icone
-- Ispirazione dal design moderno delle app mobile
+**Sviluppatore**: 
+- **Email**: iscrizioni.fusarri at gmail.com
+- **LinkedIn**: [Il Tuo Profilo](https://linkedin.com/in/federico-fusarri)
+- **GitHub**: [@tuo-username](https://github.com/FDRFSR)
 
 ---
 
-⭐ **Se ti è piaciuto questo progetto, lascia una stella!** ⭐
+**💡 Suggerimento**: Per un'esperienza ottimale, utilizza la dashboard su schermo grande per visualizzare tutte le metriche contemporaneamente.
+
+**🚀 Prossime Funzionalità**:
+- Export dati in Excel/PDF
+- Integrazione calendario
+- Notifiche push
+- Modalità collaborativa multi-utente
